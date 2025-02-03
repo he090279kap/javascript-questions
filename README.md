@@ -5149,3 +5149,30 @@ The condition within the `if` statement checks whether the value of `!typeof ran
 
 </p>
 </details>
+
+###### 155.1. What's the output?
+let user = { name: "Alice" };
+const weakMap = new WeakMap();
+weakMap.set(user, "active");
+
+user = null; // Remove the reference to the object
+
+setTimeout(() => {
+  console.log(weakMap.has(user));
+}, 1000);
+A: true
+B: false
+C: undefined
+D: TypeError
+<details><summary><b>Answer</b></summary> <p>
+Answer: B
+WeakMap allows objects to be used as keys, but it does not prevent them from being garbage collected if there are no more references to the object.
+
+A user object is created and serves as a key in the WeakMap.
+The value "active" is bound to the user object.
+The user variable is assigned null, removing the last reference to the object.
+The garbage collector removes the object from memory (since WeakMap does not prevent this).
+After 1 second, console.log(weakMap.has(user)) is executed, but user is now null and the object itself has been removed, so the WeakMap no longer contains this key.
+✅ Answer: false
+
+</p> </details>
